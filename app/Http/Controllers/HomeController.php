@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -34,6 +35,12 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {
-        return $request->session()->get('key');
+        return DB::table('sessions')->where('user_id', '!=', null)->pluck('user_id');
+    }
+
+    public function users(Request $request)
+    {
+        dd($request->users_id);
+        // return DB::table('sessions')->where('user_id', '!=', null)->pluck('user_id');
     }
 }

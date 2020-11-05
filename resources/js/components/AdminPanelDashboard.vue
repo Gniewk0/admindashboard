@@ -1,0 +1,29 @@
+<template>
+    <div class="container col-md-8 mr-2">
+        <div class="card">
+            <div class="card-header">Dashboard</div>
+
+            <div class="card-body">
+                <h1>hi</h1>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data(){
+            return {
+
+            }
+        },
+        mounted() {
+        },
+        computed: {
+
+        },
+        methods: {
+
+        }
+    }
+</script>

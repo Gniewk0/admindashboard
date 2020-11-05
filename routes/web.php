@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/test', [App\Http\Controllers\HomeController::class, 'test']);
 Route::get('/sesja', [App\Http\Controllers\HomeController::class, 'show']);
+Route::get('/users', [App\Http\Controllers\HomeController::class, 'users']);

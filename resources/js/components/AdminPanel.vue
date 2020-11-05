@@ -1,37 +1,38 @@
 <template>
 <div class="d-flex justify-content-center">
-    <div class="container col-md-8 mr-2">
-        <div class="card">
-            <div class="card-header">dashboard</div>
-
-            <div class="card-body">
-                <h1>hi</h1>
-            </div>
-        </div>
-    </div>
-    <div class="container col-md-3 ml-2">
-        <div class="card">
-            <div class="card-header">users online</div>
-
-            <div class="card-body">
-                <h1>hi</h1>
-            </div>
-        </div>
-    </div>
+    <Dashboard></Dashboard>
+    <UserList>
+        <p>no witam</p>
+    </UserList>
 </div>
 </template>
 
 <script>
+    import UserList from './AdminPanelUserList';
+    import Dashboard from './AdminPanelDashboard';
     export default {
         data(){
             return {
-
+                users_id: '',
+                users: [],
             }
+        },
+        components: {
+            UserList,
+            Dashboard,
         },
         mounted() {
             axios.get('/sesja')
-                .then(response => console.log(response.data))
+                .then(response => this.users_id = response.data)
                 .catch(error => this.errors.record(error.response.data));
+        },
+        watch: {
+            'users_id': function(newVal, oldVal) {
+                axios.get('/users', { params: {users_id: this.users_id}})
+                    .then(response => console.log(response.data))
+                    // .then(response => this.users.push[response.data])
+                    .catch(error => this.errors.record(error.response.data));
+            }
         },
         computed: {
 
