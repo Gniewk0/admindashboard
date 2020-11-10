@@ -23,3 +23,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/test', [App\Http\Controllers\HomeController::class, 'test']);
 Route::get('/sesja', [App\Http\Controllers\HomeController::class, 'show']);
 Route::get('/users', [App\Http\Controllers\HomeController::class, 'users']);
+Route::get('/onlineusers', [App\Http\Controllers\HomeController::class, 'getOnlineUsers']);

@@ -18,8 +18,25 @@
                 </form>
             </div>
         </nav>
-        <div>
+
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" v-model="textarea"></textarea>
+            </div>
+        </form>
+
+        <div id="counter" class="flex flex-column">
+            <button @click="decrementValue" class="button-reset bg-blue ba b--black ph4 pv3 mb2 white f4 dim">Decrement Counter Value</button>
+            <button @click="incrementValue" class="button-reset bg-green ba b--black ph4 pv3 mb2 white f4 dim">Increments Counter Value</button>
+            <button @click="resetValue" class="button-reset bg-red ba b--black ph4 pv3 mb2 white f4 dim">Reset Counter Value</button>
+            <div class="f2 tc pa4 mv4 bg-light-gray ba b--light-silver">{{counter}}</div>
+            <!--   <div class="ph4 pv4 ba b--black-20">
+                <input type="text" v-model="firstName" placeholder="First Name" class="input-reset ba b--black-10 ph4 pv3" />
+            <button @click="logName" class="button-reset pv3 ph2 bg-white ba b--black-20">Log User Name</button>
+            </div> -->
         </div>
+
     </div>
 </template>
 
@@ -32,7 +49,10 @@
                 data: [],
                 searchcheck: false,
                 search: '',
-                curentId: ''
+                curentId: '',
+                textarea: '',
+                 counter: 0,
+    firstName: ''
             }
         },
         mounted() {
@@ -84,7 +104,28 @@
                     .then(response => this.getData())
                     .catch(error => this.errors.record(error.response.data));
                 }
-            }
+            },
+             // incrementValue: function(){
+    //   return this.counter == ++this.counter;
+    // },
+    // resetValue: function(){
+    //   this.counter = 0;
+    // },
+    // decrementValue: function(){
+    //   return this.counter == --this.counter;
+    // },
+    incrementValue() {
+      this.counter++;
+    },
+    decrementValue() {
+      this.counter--;
+    },
+    resetValue() {
+      this.counter = 0;
+    },
+    logName: function(){
+      console.log('firstName:', this.firstName);
+    }
         }
     }
 </script>

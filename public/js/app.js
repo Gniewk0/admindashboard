@@ -1919,13 +1919,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       users_id: '',
-      users: []
+      users: [],
+      online: ''
     };
   },
   components: {
@@ -1933,17 +1941,11 @@ __webpack_require__.r(__webpack_exports__);
     Dashboard: _AdminPanelDashboard__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/sesja').then(function (response) {
-      return _this.users_id = response.data;
-    })["catch"](function (error) {
-      return _this.errors.record(error.response.data);
-    });
+    this.getOnlineUsers();
   },
   watch: {
     'users_id': function users_id(newVal, oldVal) {
-      var _this2 = this;
+      var _this = this;
 
       axios.get('/users', {
         params: {
@@ -1953,12 +1955,31 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(response.data);
       }) // .then(response => this.users.push[response.data])
       ["catch"](function (error) {
-        return _this2.errors.record(error.response.data);
+        return _this.errors.record(error.response.data);
       });
     }
   },
   computed: {},
-  methods: {}
+  methods: {
+    getOnlineUsers: function getOnlineUsers() {
+      var _this2 = this;
+
+      axios.get('/onlineusers').then(function (response) {
+        return _this2.online = response.data;
+      })["catch"](function (error) {
+        return _this2.errors.record(error.response.data);
+      });
+    },
+    session: function session() {
+      var _this3 = this;
+
+      axios.get('/sesja').then(function (response) {
+        return _this3.users_id = response.data;
+      })["catch"](function (error) {
+        return _this3.errors.record(error.response.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2061,6 +2082,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2069,7 +2107,10 @@ __webpack_require__.r(__webpack_exports__);
       data: [],
       searchcheck: false,
       search: '',
-      curentId: ''
+      curentId: '',
+      textarea: '',
+      counter: 0,
+      firstName: ''
     };
   },
   mounted: function mounted() {},
@@ -2133,6 +2174,27 @@ __webpack_require__.r(__webpack_exports__);
           return _this3.errors.record(error.response.data);
         });
       }
+    },
+    // incrementValue: function(){
+    //   return this.counter == ++this.counter;
+    // },
+    // resetValue: function(){
+    //   this.counter = 0;
+    // },
+    // decrementValue: function(){
+    //   return this.counter == --this.counter;
+    // },
+    incrementValue: function incrementValue() {
+      this.counter++;
+    },
+    decrementValue: function decrementValue() {
+      this.counter--;
+    },
+    resetValue: function resetValue() {
+      this.counter = 0;
+    },
+    logName: function logName() {
+      console.log('firstName:', this.firstName);
     }
   }
 });
@@ -37735,7 +37797,38 @@ var render = function() {
     [
       _c("Dashboard"),
       _vm._v(" "),
-      _c("UserList", [_c("p", [_vm._v("no witam")])])
+      _c("UserList", [
+        _c(
+          "ul",
+          { staticClass: "list-group" },
+          _vm._l(_vm.online, function(user) {
+            return _c(
+              "li",
+              { key: user.id, staticClass: "list-group-item border-0" },
+              [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "bi bi-circle-fill",
+                    class: !user.away ? "text-success" : "text-warning",
+                    attrs: {
+                      width: "1em",
+                      height: "1em",
+                      viewBox: "0 0 16 16",
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg"
+                    }
+                  },
+                  [_c("circle", { attrs: { cx: "7", cy: "7", r: "7" } })]
+                ),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(user.name))])
+              ]
+            )
+          }),
+          0
+        )
+      ])
     ],
     1
   )
@@ -37921,7 +38014,73 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div")
+    _c("form", [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "exampleFormControlTextarea1" } }, [
+          _vm._v("Example textarea")
+        ]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.textarea,
+              expression: "textarea"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "exampleFormControlTextarea1", rows: "5" },
+          domProps: { value: _vm.textarea },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.textarea = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex flex-column", attrs: { id: "counter" } }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "button-reset bg-blue ba b--black ph4 pv3 mb2 white f4 dim",
+          on: { click: _vm.decrementValue }
+        },
+        [_vm._v("Decrement Counter Value")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass:
+            "button-reset bg-green ba b--black ph4 pv3 mb2 white f4 dim",
+          on: { click: _vm.incrementValue }
+        },
+        [_vm._v("Increments Counter Value")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass:
+            "button-reset bg-red ba b--black ph4 pv3 mb2 white f4 dim",
+          on: { click: _vm.resetValue }
+        },
+        [_vm._v("Reset Counter Value")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "f2 tc pa4 mv4 bg-light-gray ba b--light-silver" },
+        [_vm._v(_vm._s(_vm.counter))]
+      )
+    ])
   ])
 }
 var staticRenderFns = [

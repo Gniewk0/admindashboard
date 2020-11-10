@@ -2,7 +2,14 @@
 <div class="d-flex justify-content-center">
     <Dashboard></Dashboard>
     <UserList>
-        <p>no witam</p>
+        <ul class="list-group">
+        <li class="list-group-item border-0" v-for="user in online" :key="user.id">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" :class="!user.away ? 'text-success' : 'text-warning'" class="bi bi-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7" cy="7" r="7"/>
+            </svg>
+            <span>{{user.name}}</span>
+        </li>
+        </ul>
     </UserList>
 </div>
 </template>
@@ -15,6 +22,7 @@
             return {
                 users_id: '',
                 users: [],
+                online: ''
             }
         },
         components: {
@@ -22,9 +30,7 @@
             Dashboard,
         },
         mounted() {
-            axios.get('/sesja')
-                .then(response => this.users_id = response.data)
-                .catch(error => this.errors.record(error.response.data));
+            this.getOnlineUsers()
         },
         watch: {
             'users_id': function(newVal, oldVal) {
@@ -38,7 +44,16 @@
 
         },
         methods: {
-
+            getOnlineUsers(){
+                axios.get('/onlineusers')
+                .then(response => this.online = response.data)
+                .catch(error => this.errors.record(error.response.data));
+            },
+            session(){
+                axios.get('/sesja')
+                .then(response => this.users_id = response.data)
+                .catch(error => this.errors.record(error.response.data));
+            }
         }
     }
 </script>
