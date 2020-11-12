@@ -4,7 +4,7 @@
             <div class="card-header">Dashboard</div>
 
             <div class="card-body">
-                <h1>hi</h1>
+                <slot></slot>
             </div>
         </div>
     </div>

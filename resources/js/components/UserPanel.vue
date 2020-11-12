@@ -51,8 +51,9 @@
                 search: '',
                 curentId: '',
                 textarea: '',
-                 counter: 0,
-    firstName: ''
+                counter: 0,
+                buffer: 0,
+                firstName: ''
             }
         },
         mounted() {
@@ -67,6 +68,24 @@
                     this.$store.commit('getData', value);
                 }
             },
+        },
+        watch: {
+            'textarea': function showModal(newVal, oldVal) {
+                setTimeout(function(){
+                    if(newVal.length > oldVal.length){
+                        axios.post('/text')
+                        .then(response => console.log(response.data))
+                        .catch(error => this.errors.record(error.response.data));
+                    }
+                }, 3000);
+            },
+            counter(value) {
+                setTimeout(() => {
+                    axios.post('/count')
+                    .then(response => console.log(response.data))
+                    .catch(error => this.errors.record(error.response.data));
+                }, 3000);
+            }
         },
         methods: {
             closemodal(){

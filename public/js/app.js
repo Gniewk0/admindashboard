@@ -1926,6 +1926,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1933,7 +1935,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users_id: '',
       users: [],
-      online: ''
+      online: '',
+      loginlist: ''
     };
   },
   components: {
@@ -1942,6 +1945,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getOnlineUsers();
+    this.getLoginList();
   },
   watch: {
     'users_id': function users_id(newVal, oldVal) {
@@ -1952,7 +1956,7 @@ __webpack_require__.r(__webpack_exports__);
           users_id: this.users_id
         }
       }).then(function (response) {
-        return console.log(response.data);
+        return dataFix(response.data);
       }) // .then(response => this.users.push[response.data])
       ["catch"](function (error) {
         return _this.errors.record(error.response.data);
@@ -1977,6 +1981,15 @@ __webpack_require__.r(__webpack_exports__);
         return _this3.users_id = response.data;
       })["catch"](function (error) {
         return _this3.errors.record(error.response.data);
+      });
+    },
+    getLoginList: function getLoginList() {
+      var _this4 = this;
+
+      axios.get('/loginlist').then(function (response) {
+        return console.log(response.data);
+      })["catch"](function (error) {
+        return _this4.errors.record(error.response.data);
       });
     }
   }
@@ -2110,6 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
       curentId: '',
       textarea: '',
       counter: 0,
+      buffer: 0,
       firstName: ''
     };
   },
@@ -2124,6 +2138,32 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  watch: {
+    'textarea': function showModal(newVal, oldVal) {
+      setTimeout(function () {
+        var _this = this;
+
+        if (newVal.length > oldVal.length) {
+          axios.post('/text').then(function (response) {
+            return console.log(response.data);
+          })["catch"](function (error) {
+            return _this.errors.record(error.response.data);
+          });
+        }
+      }, 3000);
+    },
+    counter: function counter(value) {
+      var _this2 = this;
+
+      setTimeout(function () {
+        axios.post('/count').then(function (response) {
+          return console.log(response.data);
+        })["catch"](function (error) {
+          return _this2.errors.record(error.response.data);
+        });
+      }, 3000);
+    }
+  },
   methods: {
     closemodal: function closemodal() {
       this.showModalEdit = false;
@@ -2132,12 +2172,12 @@ __webpack_require__.r(__webpack_exports__);
       this.getData();
     },
     getData: function getData() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get('/users').then(function (response) {
-        return _this.data = response.data;
+        return _this3.data = response.data;
       })["catch"](function (error) {
-        return _this.errors.record(error.response.data);
+        return _this3.errors.record(error.response.data);
       });
     },
     searchmethod: function searchmethod() {
@@ -2148,20 +2188,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('getData');
     },
     Searching: function Searching(value) {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get('/users/search', {
         params: {
           key: value
         }
       }).then(function (response) {
-        _this2.data = response.data;
+        _this4.data = response.data;
       }, function (error) {
         console.log(error);
       });
     },
     Delete: function Delete(payload) {
-      var _this3 = this;
+      var _this5 = this;
 
       if (confirm('Are you sure you want to delete this user?')) {
         axios["delete"]('/users', {
@@ -2169,9 +2209,9 @@ __webpack_require__.r(__webpack_exports__);
             id: payload
           }
         }).then(function (response) {
-          return _this3.getData();
+          return _this5.getData();
         })["catch"](function (error) {
-          return _this3.errors.record(error.response.data);
+          return _this5.errors.record(error.response.data);
         });
       }
     },
@@ -37855,22 +37895,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container col-md-8 mr-2" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Dashboard")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [_c("h1", [_vm._v("hi")])])
-      ])
+  return _c("div", { staticClass: "container col-md-8 mr-2" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Dashboard")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [_vm._t("default")], 2)
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

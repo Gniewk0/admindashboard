@@ -53,4 +53,9 @@ class HomeController extends Controller
     public function getOnlineUsers(){
         return User::onlineUsers();
     }
+
+    public function loginlist(Request $request){
+        // return now('CET')->addHour()->addDays(-7)->format('Y-m-d');
+        return DB::table('users_succesfull_logins')->where('date', '>', now('CET')->addHour()->addDays(-7)->format('Y-m-d'))->get();
+    }
 }

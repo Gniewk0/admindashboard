@@ -1,6 +1,8 @@
 <template>
 <div class="d-flex justify-content-center">
-    <Dashboard></Dashboard>
+    <Dashboard>
+
+    </Dashboard>
     <UserList>
         <ul class="list-group">
         <li class="list-group-item border-0" v-for="user in online" :key="user.id">
@@ -22,7 +24,8 @@
             return {
                 users_id: '',
                 users: [],
-                online: ''
+                online: '',
+                loginlist: ''
             }
         },
         components: {
@@ -31,11 +34,12 @@
         },
         mounted() {
             this.getOnlineUsers()
+            this.getLoginList()
         },
         watch: {
             'users_id': function(newVal, oldVal) {
                 axios.get('/users', { params: {users_id: this.users_id}})
-                    .then(response => console.log(response.data))
+                    .then(response => dataFix(response.data))
                     // .then(response => this.users.push[response.data])
                     .catch(error => this.errors.record(error.response.data));
             }
@@ -52,6 +56,11 @@
             session(){
                 axios.get('/sesja')
                 .then(response => this.users_id = response.data)
+                .catch(error => this.errors.record(error.response.data));
+            },
+            getLoginList(){
+                axios.get('/loginlist')
+                .then(response => console.log(response.data))
                 .catch(error => this.errors.record(error.response.data));
             }
         }
