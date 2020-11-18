@@ -4,6 +4,7 @@
             <div class="card-header">Dashboard</div>
 
             <div class="card-body">
+                <p>{{date}}</p>
                 <slot></slot>
             </div>
         </div>
@@ -14,7 +15,7 @@
     export default {
         data(){
             return {
-
+                date: new Date()
             }
         },
         mounted() {
