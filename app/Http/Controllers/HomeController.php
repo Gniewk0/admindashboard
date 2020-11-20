@@ -58,27 +58,26 @@ class HomeController extends Controller
         // return now('CET')->addHour()->addDays(-7)->format('Y-m-d');
         $data = DB::table('users_succesfull_logins')->where('login_date', '>', now('CET')->addHour()->addDays(-7)->format('Y-m-d'))->get()->toArray();
         $counteddate = array(0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0);
-
         for($i=0;$i<count($data);$i++){
-            if($data[$i]->date == now('CET')->addHour()->format('Y-m-d')){
+            if($data[$i]->login_date == now('CET')->addHour()->format('Y-m-d')){
                 $counteddate[0]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-1)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-1)->format('Y-m-d')){
                 $counteddate[1]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-2)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-2)->format('Y-m-d')){
                 $counteddate[2]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-3)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-3)->format('Y-m-d')){
                 $counteddate[3]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-4)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-4)->format('Y-m-d')){
                 $counteddate[4]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-5)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-5)->format('Y-m-d')){
                 $counteddate[5]++;
             }
-            elseif($data[$i]->date == now('CET')->addHour()->addDays(-6)->format('Y-m-d')){
+            elseif($data[$i]->login_date == now('CET')->addHour()->addDays(-6)->format('Y-m-d')){
                 $counteddate[6]++;
             }
         }
