@@ -20,13 +20,13 @@
         </nav>
 
         <form>
-            <div class="form-group">
+            <div class="form-group mx-3">
                 <label for="exampleFormControlTextarea1">Example textarea</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" v-model="textarea"></textarea>
             </div>
         </form>
 
-        <div id="counter" class="flex flex-column">
+        <div id="counter" class="flex flex-column mx-3">
             <button @click="decrementValue" class="button-reset bg-blue ba b--black ph4 pv3 mb2 white f4 dim">Decrement Counter Value</button>
             <button @click="incrementValue" class="button-reset bg-green ba b--black ph4 pv3 mb2 white f4 dim">Increments Counter Value</button>
             <button @click="resetValue" class="button-reset bg-red ba b--black ph4 pv3 mb2 white f4 dim">Reset Counter Value</button>
@@ -37,10 +37,16 @@
             </div> -->
         </div>
 
+        <div class="d-flex justify-content-center pt-2 mt-4">
+            <Magicbutton>
+                <button type="button" class="btn btn-secondary button" @click="saveData">sus button</button>
+            </Magicbutton>
+        </div>
     </div>
 </template>
 
 <script>
+    import Magicbutton from './Magicbutton';
     export default {
         data(){
             return {
@@ -52,12 +58,15 @@
                 curentId: '',
                 textarea: '',
                 counter: 0,
-                buffer: 0,
                 firstName: ''
             }
         },
+        components: {
+            Magicbutton
+        },
         mounted() {
-
+            this.getText()
+            this.getCount()
         },
         computed: {
             vuexdata: {
@@ -70,25 +79,37 @@
             },
         },
         watch: {
-            'textarea': function showModal(newVal, oldVal) {
-                setTimeout(function(){
-                    if(newVal.length > oldVal.length){
-                        axios.post('/text')
-                        .then(response => console.log(response.data))
-                        .catch(error => this.errors.record(error.response.data));
-                    }
-                }, 3000);
-            },
-            counter(value) {
-                setTimeout(() => {
-                    axios.post('/count')
-                    .then(response => console.log(response.data))
-                    .catch(error => this.errors.record(error.response.data));
-                }, 3000);
-            }
         },
         methods: {
-            closemodal(){
+            getText(){
+                axios.get('/usertextget', { textarea: this.textarea })
+                    .then(response => this.textarea = response.data[0])
+                    .catch(error => this.errors.record(error.response.data));
+            },
+            getCount(){
+                axios.get('/usercountget', { counter: this.counter })
+                    .then(response => this.counter = response.data[0])
+                    .catch(error => this.errors.record(error.response.data));
+            },
+            getData(){
+                this.getText()
+                this.getCount()
+            },
+            saveData(){
+                this.saveText(),
+                this.saveCount()
+            },
+            saveText(){
+                axios.post('/usertextsave', { textarea: this.textarea })
+                    // .then(response => console.log(response.data))
+                    .catch(error => this.errors.record(error.response.data));
+            },
+            saveCount(){
+                axios.post('/usercountsave', { counter: this.counter })
+                    // .then(response => console.log(response.data))
+                    .catch(error => this.errors.record(error.response.data));
+            },
+            closeModal(){
                 this.showModalEdit = false
                 this.showModal = false
                 this.showModalDestroy = false
@@ -124,27 +145,27 @@
                     .catch(error => this.errors.record(error.response.data));
                 }
             },
-             // incrementValue: function(){
-    //   return this.counter == ++this.counter;
-    // },
-    // resetValue: function(){
-    //   this.counter = 0;
-    // },
-    // decrementValue: function(){
-    //   return this.counter == --this.counter;
-    // },
-    incrementValue() {
-      this.counter++;
-    },
-    decrementValue() {
-      this.counter--;
-    },
-    resetValue() {
-      this.counter = 0;
-    },
-    logName: function(){
-      console.log('firstName:', this.firstName);
-    }
+            // incrementValue: function(){
+            //   return this.counter == ++this.counter;
+            // },
+            // resetValue: function(){
+            //   this.counter = 0;
+            // },
+            // decrementValue: function(){
+            //   return this.counter == --this.counter;
+            // },
+            incrementValue() {
+            this.counter++;
+            },
+            decrementValue() {
+            this.counter--;
+            },
+            resetValue() {
+            this.counter = 0;
+            },
+            logName: function(){
+            console.log('firstName:', this.firstName);
+            }
         }
     }
 </script>

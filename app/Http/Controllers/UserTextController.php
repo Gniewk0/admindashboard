@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserText;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserTextController extends Controller
 {
@@ -34,7 +36,21 @@ class UserTextController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        dump($request->textarea);
+        $user_id = Auth::user()->id;
+        if(count(UserText::where('user_id', '=', $user_id)->get()) !== 0){
+            UserText::where('user_id', '=', $user_id)->update([
+                'user_id' => $user_id,
+                'text' => $request->textarea,
+            ]);
+            return ['message' => 'text update'];
+        }else{
+            UserText::insert([
+                'user_id' => $user_id,
+                'text' => $request->textarea,
+            ]);
+            return ['message' => 'text insert'];
+        }
     }
 
     /**
@@ -43,9 +59,10 @@ class UserTextController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $user_id = Auth::user()->id;
+        return UserText::where('user_id', '=', $user_id)->pluck('text');
     }
 
     /**

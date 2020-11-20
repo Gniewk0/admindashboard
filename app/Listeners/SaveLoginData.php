@@ -30,8 +30,8 @@ class SaveLoginData
         date_default_timezone_set('Europe/Warsaw');
         DB::table('users_succesfull_logins')->insert([
             'user_id' => $event->data,
-            'date' => date('Y-m-d', strtotime('now')),
-            'time' => date('H:i:s', strtotime('now'))
+            'login_date' => date('Y-m-d', strtotime('now')),
+            'login_time' => date('H:i:s', strtotime('now'))
         ]);
     }
 }

@@ -15,7 +15,7 @@ class CreateUserTextsTable extends Migration
     {
         Schema::create('user_texts', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('user_id')->index()->unique();
             $table->text('text');
         });
     }

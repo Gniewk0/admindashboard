@@ -17,8 +17,8 @@ class CreateUsersSuccesfullLoginsTable extends Migration
         Schema::create('users_succesfull_logins', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->date('date');
-            $table->time('time');
+            $table->date('login_date');
+            $table->time('login_time');
         });
     }
 

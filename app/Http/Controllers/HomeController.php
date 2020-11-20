@@ -56,7 +56,7 @@ class HomeController extends Controller
 
     public function loginlist(Request $request){
         // return now('CET')->addHour()->addDays(-7)->format('Y-m-d');
-        $data = DB::table('users_succesfull_logins')->where('date', '>', now('CET')->addHour()->addDays(-7)->format('Y-m-d'))->get()->toArray();
+        $data = DB::table('users_succesfull_logins')->where('login_date', '>', now('CET')->addHour()->addDays(-7)->format('Y-m-d'))->get()->toArray();
         $counteddate = array(0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0);
 
         for($i=0;$i<count($data);$i++){

@@ -30,7 +30,7 @@
 <script>
     import UserList from './AdminPanelUserList';
     import Dashboard from './AdminPanelDashboard';
-    import Magicbutton from './AdminPanelMagicbutton';
+    import Magicbutton from './Magicbutton';
     export default {
         data(){
             return {

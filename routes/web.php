@@ -27,3 +27,7 @@ Route::get('/users', [App\Http\Controllers\HomeController::class, 'users']);
 Route::get('/onlineusers', [App\Http\Controllers\HomeController::class, 'getOnlineUsers']);
 Route::post('/text', [App\Http\Controllers\UserTextController::class, 'store']);
 Route::post('/count', [App\Http\Controllers\UserCountController::class, 'store']);
+Route::post('/usertextsave', [App\Http\Controllers\UserTextController::class, 'store']);
+Route::post('/usercountsave', [App\Http\Controllers\UserCountController::class, 'store']);
+Route::get('/usertextget', [App\Http\Controllers\UserTextController::class, 'show']);
+Route::get('/usercountget', [App\Http\Controllers\UserCountController::class, 'show']);

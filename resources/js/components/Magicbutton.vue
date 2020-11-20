@@ -1,6 +1,7 @@
 <template>
     <transition name="bounce">
-        <button type="button" class="btn btn-secondary button">sus button</button>
+        <slot></slot>
+        <!-- <button type="button" class="btn btn-secondary button">sus button</button> -->
     </transition>
 </template>
 
